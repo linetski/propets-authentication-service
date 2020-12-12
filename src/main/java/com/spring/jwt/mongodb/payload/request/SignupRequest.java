@@ -1,4 +1,4 @@
-package com.bezkoder.spring.jwt.mongodb.payload.request;
+package com.spring.jwt.mongodb.payload.request;
 
 import java.util.Set;
 

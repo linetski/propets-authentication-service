@@ -1,4 +1,4 @@
-package com.bezkoder.spring.jwt.mongodb.security;
+package com.spring.jwt.mongodb.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,9 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.bezkoder.spring.jwt.mongodb.security.jwt.AuthEntryPointJwt;
-import com.bezkoder.spring.jwt.mongodb.security.jwt.AuthTokenFilter;
-import com.bezkoder.spring.jwt.mongodb.security.services.UserDetailsServiceImpl;
+import com.spring.jwt.mongodb.security.jwt.AuthEntryPointJwt;
+import com.spring.jwt.mongodb.security.jwt.AuthTokenFilter;
+import com.spring.jwt.mongodb.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

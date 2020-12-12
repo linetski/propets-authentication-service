@@ -1,4 +1,4 @@
-package com.bezkoder.spring.jwt.mongodb;
+package com.spring.jwt.mongodb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

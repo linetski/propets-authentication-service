@@ -1,4 +1,4 @@
-package com.bezkoder.spring.jwt.mongodb.security.services;
+package com.spring.jwt.mongodb.security.services;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,8 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.bezkoder.spring.jwt.mongodb.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring.jwt.mongodb.models.User;
 
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
