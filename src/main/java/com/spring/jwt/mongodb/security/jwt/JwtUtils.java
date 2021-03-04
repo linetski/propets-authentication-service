@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.spring.jwt.mongodb.security.services.UserDetailsImpl;
 
@@ -37,6 +38,16 @@ public class JwtUtils {
 	public String getUserNameFromJwtToken(String token) {
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
+	
+	public String getUserNameFromJwtAuthorization(String authorizationToken) {
+		String token = null;
+		if (StringUtils.hasText(authorizationToken) && authorizationToken.startsWith("Bearer ")) {
+			token = authorizationToken.substring(7, authorizationToken.length());
+		}
+		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+	}
+	
+
 
 	public boolean validateJwtToken(String authToken) {
 		try {
