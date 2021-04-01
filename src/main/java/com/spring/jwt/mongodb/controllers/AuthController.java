@@ -132,8 +132,6 @@ public class AuthController {
 		LoginRequest loginRequest = new LoginRequest();
 		loginRequest.setUserEmail(signUpRequest.getEmail());
 		loginRequest.setPassword(signUpRequest.getPassword());
-		authenticateUser(loginRequest);
-		
 		return authenticateUser(loginRequest);
 	}
 	
