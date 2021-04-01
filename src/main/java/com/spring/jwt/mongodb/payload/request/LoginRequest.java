@@ -3,19 +3,21 @@ package com.spring.jwt.mongodb.payload.request;
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
+	
 	@NotBlank
-	private String username;
+	private String userEmail;
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
 	@NotBlank
 	private String password;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 	public String getPassword() {
 		return password;
