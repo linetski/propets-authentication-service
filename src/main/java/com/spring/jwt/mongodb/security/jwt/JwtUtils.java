@@ -1,5 +1,9 @@
 package com.spring.jwt.mongodb.security.jwt;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -26,11 +30,16 @@ public class JwtUtils {
 	public String generateJwtToken(Authentication authentication) {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
+		LocalDate localDate = LocalDate.now();
+		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
+		LocalDate localDate2 = LocalDate.now().plusDays(1);
+		Date date2 = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		
 		return Jwts.builder()
 				.setSubject((userPrincipal.getUsername()))
-				.setIssuedAt(new Date())
-				.setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+				.setIssuedAt(date)
+				.setExpiration(date2)
 				.signWith(SignatureAlgorithm.HS512, jwtSecret)
 				.compact();
 	}
@@ -46,8 +55,6 @@ public class JwtUtils {
 		}
 		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
-	
-
 
 	public boolean validateJwtToken(String authToken) {
 		try {

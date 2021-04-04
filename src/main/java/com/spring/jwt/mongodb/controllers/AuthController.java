@@ -141,8 +141,7 @@ public class AuthController {
     }
 	
 	@RequestMapping("/getProfileName")
-    public String getProfileName(@RequestHeader (name="Authorization") String token) {
-		System.out.println(jwtUtils.getUserNameFromJwtAuthorization(token));
-		return jwtUtils.getUserNameFromJwtAuthorization(token);
+    public ResponseEntity<?> getProfileName(@RequestHeader (name="Authorization") String token) {		
+		return ResponseEntity.ok(userRepository.findByEmail((jwtUtils.getUserNameFromJwtAuthorization(token))).get().getUsername());
     }
 }
