@@ -86,7 +86,7 @@ public class AuthController {
 					.body(new MessageResponse("Error: Username is already taken!"));
 		}
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if (userRepository.existsByEmail(signUpRequest.getUserEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
@@ -94,7 +94,7 @@ public class AuthController {
 
 		// Create new user's account
 		User user = new User(signUpRequest.getUsername(), 
-							 signUpRequest.getEmail(),
+							 signUpRequest.getUserEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
 		Set<String> strRoles = signUpRequest.getRoles();
@@ -130,7 +130,7 @@ public class AuthController {
 		userRepository.save(user);
 		
 		LoginRequest loginRequest = new LoginRequest();
-		loginRequest.setUserEmail(signUpRequest.getEmail());
+		loginRequest.setUserEmail(signUpRequest.getUserEmail());
 		loginRequest.setPassword(signUpRequest.getPassword());
 		return authenticateUser(loginRequest);
 	}
