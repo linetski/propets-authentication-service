@@ -173,6 +173,7 @@ public class AuthController {
 	    return ResponseEntity.ok("email sended successfuly");
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping("/user/changePassword")
 	public ResponseEntity<?> saveNewPassword(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword) {
 		String badTokenReason = passwordResetService.validatePasswordResetToken(token);
