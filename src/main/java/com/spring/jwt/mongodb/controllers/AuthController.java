@@ -157,7 +157,7 @@ public class AuthController {
     }
 	
 	@RequestMapping("/user/resetPassword")
-	public GenericResponse resetPassword(HttpServletRequest request, @RequestBody String userEmail) {
+	public ResponseEntity<?> resetPassword(HttpServletRequest request, @RequestBody String userEmail) {
 	    Optional<User> user = userRepository.findByEmail(userEmail);
 	    if (user == null) {
 	        try {
@@ -170,7 +170,7 @@ public class AuthController {
 	    String token = UUID.randomUUID().toString();
 	    passwordResetService.createPasswordResetTokenForUser(user.get(), token);
 	    passwordResetService.sendEmail(token, user.get());
-	    return new GenericResponse("","");
+	    return ResponseEntity.ok("email sended successfuly");
 	}
 	
 	@RequestMapping("/user/changePassword")
