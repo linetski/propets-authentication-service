@@ -2,9 +2,13 @@ package com.spring.jwt.mongodb.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +25,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.jwt.mongodb.models.ERole;
 import com.spring.jwt.mongodb.models.Role;
 import com.spring.jwt.mongodb.models.User;
+import com.spring.jwt.mongodb.password.GenericResponse;
+import com.spring.jwt.mongodb.password.PasswordResetService;
 import com.spring.jwt.mongodb.payload.request.LoginRequest;
 import com.spring.jwt.mongodb.payload.request.SignupRequest;
 import com.spring.jwt.mongodb.payload.response.JwtResponse;
@@ -39,6 +46,7 @@ import com.spring.jwt.mongodb.security.services.UserDetailsImpl;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+	
 	@Autowired
 	AuthenticationManager authenticationManager;
 
@@ -53,6 +61,9 @@ public class AuthController {
 
 	@Autowired
 	JwtUtils jwtUtils;
+	
+	@Autowired
+	PasswordResetService passwordResetService;
 	
 	@Value("${user.role}")
 	private String role;
@@ -144,4 +155,32 @@ public class AuthController {
     public ResponseEntity<?> getProfileName(@RequestHeader (name="Authorization") String token) {		
 		return ResponseEntity.ok(userRepository.findByEmail((jwtUtils.getUserNameFromJwtAuthorization(token))).get().getUsername());
     }
+	
+	@RequestMapping("/user/resetPassword")
+	public GenericResponse resetPassword(HttpServletRequest request, @RequestBody String userEmail) {
+	    Optional<User> user = userRepository.findByEmail(userEmail);
+	    if (user == null) {
+	        try {
+				throw new Exception();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	    String token = UUID.randomUUID().toString();
+	    passwordResetService.createPasswordResetTokenForUser(user.get(), token);
+	    passwordResetService.sendEmail(token, user.get());
+	    return new GenericResponse("","");
+	}
+	
+	@RequestMapping("/user/changePassword")
+	public ResponseEntity<?> saveNewPassword(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword) {
+		String badTokenReason = passwordResetService.validatePasswordResetToken(token);
+		if (badTokenReason != null) {
+			return ResponseEntity.ok(badTokenReason);
+		} else {
+			passwordResetService.changePassword(token, newPassword);
+		    return ResponseEntity.ok("Password changed succesfully");
+		}
+	}
 }
