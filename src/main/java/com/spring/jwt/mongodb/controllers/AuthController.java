@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.jwt.mongodb.models.ERole;
+import com.spring.jwt.mongodb.models.NewPasswordWithToken;
 import com.spring.jwt.mongodb.models.Role;
 import com.spring.jwt.mongodb.models.User;
 import com.spring.jwt.mongodb.password.GenericResponse;
@@ -173,14 +174,14 @@ public class AuthController {
 	    return ResponseEntity.ok("email sended successfuly");
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	
 	@RequestMapping("/user/changePassword")
-	public ResponseEntity<?> saveNewPassword(@RequestParam("token") String token, @RequestParam("newPassword") String newPassword) {
-		String badTokenReason = passwordResetService.validatePasswordResetToken(token);
+	public ResponseEntity<?> saveNewPassword(@RequestBody NewPasswordWithToken newPasswordWithToken) {
+		String badTokenReason = passwordResetService.validatePasswordResetToken(newPasswordWithToken.getToken());
 		if (badTokenReason != null) {
 			return ResponseEntity.ok(badTokenReason);
 		} else {
-			passwordResetService.changePassword(token, newPassword);
+			passwordResetService.changePassword(newPasswordWithToken.getToken(),newPasswordWithToken.getNewPassword());
 		    return ResponseEntity.ok("Password changed succesfully");
 		}
 	}
