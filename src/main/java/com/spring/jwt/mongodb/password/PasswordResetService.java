@@ -36,7 +36,7 @@ public class PasswordResetService {
 	}
 
 	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
-	    String url = "http://localhost:3000" + "/user/changePassword?token=" + token;
+	    String url = "http://localhost:3000" + "/reset_password?token=" + token;
 	    //String message = messages.getMessage("message.resetPassword", null, locale);
 	    return constructEmail("reset password url:",  url, user);
 	}
@@ -56,10 +56,11 @@ public class PasswordResetService {
 	
 	public String validatePasswordResetToken(String token) {
 	    final PasswordResetToken passToken = passwordTokenRepository.findByToken(token).orElse(null);
-
-	    return !isTokenFound(passToken) ? "invalidToken"
-	            : isTokenExpired(passToken) ? "expired"
-	            : null;
+	    return !isTokenFound(passToken) ? "invalidToken" : null;
+		/*
+		 * return !isTokenFound(passToken) ? "invalidToken" : isTokenExpired(passToken)
+		 * ? "expired" : null;
+		 */
 	}
 	
 	private boolean isTokenFound(PasswordResetToken passToken) {
