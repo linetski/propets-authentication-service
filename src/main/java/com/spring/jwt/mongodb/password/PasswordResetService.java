@@ -36,9 +36,9 @@ public class PasswordResetService {
 	}
 
 	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
-	    String url = contextPath + "/user/changePassword?token=" + token;
+	    String url = "http://localhost:3000" + "/user/changePassword?token=" + token;
 	    //String message = messages.getMessage("message.resetPassword", null, locale);
-	    return constructEmail("reset password",  url, user);
+	    return constructEmail("reset password url:",  url, user);
 	}
 
 	private SimpleMailMessage constructEmail(String subject, String body, User user) {
