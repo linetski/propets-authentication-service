@@ -1,5 +1,6 @@
 package com.spring.jwt.mongodb.controllers;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -68,6 +70,14 @@ public class AuthController {
 	
 	@Value("${user.role}")
 	private String role;
+	
+	@RequestMapping("/authenticate")
+    public ResponseEntity<?> authenticate(Principal principal) {
+		if(principal != null) {
+			return ResponseEntity.ok("Token validation succesfull");
+		} else
+        return new ResponseEntity<String>("no or invalid token", HttpStatus.UNAUTHORIZED);
+    }
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
