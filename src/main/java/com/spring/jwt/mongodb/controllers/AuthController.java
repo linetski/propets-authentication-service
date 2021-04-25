@@ -68,8 +68,8 @@ public class AuthController {
 	@Autowired
 	PasswordResetService passwordResetService;
 	
-	@Value("${user.role}")
-	private String role;
+	/* @Value("${user.role}") */
+	private String role = "tempStub";
 	
 	@RequestMapping("/authenticate")
     public ResponseEntity<?> authenticate(Principal principal) {
