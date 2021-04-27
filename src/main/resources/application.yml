@@ -7,3 +7,8 @@ eureka:
       hostname: ${DOMAIN_NAME}
       nonSecurePort: 80
 
+zuul:
+ routes:
+  lostAndFoundService: 
+    path: /lostAndFound/**
+    serviceId: lostAndFoundService
