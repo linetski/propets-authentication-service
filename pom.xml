@@ -9,10 +9,10 @@
 		<version>2.3.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bezkoder</groupId>
-	<artifactId>spring-boot-security-jwt-mongodb</artifactId>
+	<groupId>propets</groupId>
+	<artifactId>authentification-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Auth-MicroService</name>
+	<name>authentification-service</name>
 	<description>Demo project for Spring Boot Auth with Spring Security,
 		JWT, MongoDB</description>
 
