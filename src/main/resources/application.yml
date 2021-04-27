@@ -3,7 +3,7 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_URI:localhost:5000}/eureka/
   instance:
-      instanceId: ${DOMAIN_NAME}
+      instanceId: ${DOMAIN_NAME}:${random.value}
       hostname: ${DOMAIN_NAME}
       nonSecurePort: 80
 
