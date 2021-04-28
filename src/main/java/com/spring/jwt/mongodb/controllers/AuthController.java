@@ -71,7 +71,7 @@ public class AuthController {
 	private String role = "tempStub";
 	
 	@RequestMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestHeader("Authorization") String authorizationToken) {
+    public ResponseEntity<String> authenticate(@RequestHeader("Authorization") String authorizationToken) {
 		logger.info("authenticate called with token: " + authorizationToken);
 		String token = null;
 		if (StringUtils.hasText(authorizationToken) && authorizationToken.startsWith("Bearer ")) {
