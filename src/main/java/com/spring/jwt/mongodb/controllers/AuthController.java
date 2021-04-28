@@ -45,7 +45,7 @@ import com.spring.jwt.mongodb.repository.UserRepository;
 import com.spring.jwt.mongodb.security.jwt.JwtUtils;
 import com.spring.jwt.mongodb.security.services.UserDetailsImpl;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+/*@CrossOrigin(origins = "*", maxAge = 3600)*/
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
