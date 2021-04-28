@@ -23,10 +23,6 @@ import com.spring.jwt.mongodb.security.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-		// securedEnabled = true,
-		// jsr250Enabled = true,
-		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
@@ -59,7 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-		.cors().and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests().antMatchers("/api/auth/**").permitAll()
 		.antMatchers("/api/test/**").permitAll()
