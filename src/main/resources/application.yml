@@ -12,4 +12,5 @@ zuul:
   lostAndFoundService: 
     path: /lostAndFound/**
     serviceId: lostAndFoundService
- ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+ ignoredHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+ ignoreSecurityHeaders: false
