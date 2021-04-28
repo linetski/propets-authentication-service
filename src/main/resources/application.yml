@@ -2,7 +2,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:5000}/eureka/
-#  instance:
-#      instanceId: ${DOMAIN_NAME:auth}:${random.value}
-#      hostname: ${DOMAIN_NAME:auth}
-#      nonSecurePort: 80
+  instance:
+      instanceId: ${DOMAIN_NAME:auth}:${random.value}
+      hostname: ${DOMAIN_NAME:auth}
+      nonSecurePort: 80
