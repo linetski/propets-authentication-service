@@ -1,14 +1,8 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:localhost:5000}/eureka/
-  instance:
-      instanceId: ${DOMAIN_NAME}:${random.value}
-      hostname: ${DOMAIN_NAME}
-      nonSecurePort: 80
-
-zuul:
- routes:
-  lostAndFoundService: 
-    path: /lostAndFound/**
-    serviceId: lostAndFoundService
+      defaultZone: ${EUREKA_URI:http://localhost:5000}/eureka/
+#  instance:
+#      instanceId: ${DOMAIN_NAME:auth}:${random.value}
+#      hostname: ${DOMAIN_NAME:auth}
+#      nonSecurePort: 80

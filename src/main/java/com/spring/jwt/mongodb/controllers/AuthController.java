@@ -1,9 +1,7 @@
 package com.spring.jwt.mongodb.controllers;
 
-import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -12,8 +10,9 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,14 +26,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.jwt.mongodb.models.ERole;
 import com.spring.jwt.mongodb.models.NewPasswordWithToken;
 import com.spring.jwt.mongodb.models.Role;
 import com.spring.jwt.mongodb.models.User;
-import com.spring.jwt.mongodb.password.GenericResponse;
 import com.spring.jwt.mongodb.password.PasswordResetService;
 import com.spring.jwt.mongodb.payload.request.LoginRequest;
 import com.spring.jwt.mongodb.payload.request.SignupRequest;
@@ -47,8 +44,10 @@ import com.spring.jwt.mongodb.security.services.UserDetailsImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 	
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -72,8 +71,13 @@ public class AuthController {
 	private String role = "tempStub";
 	
 	@RequestMapping("/authenticate")
-    public ResponseEntity<?> authenticate(Principal principal) {
-		if(principal != null) {
+    public ResponseEntity<?> authenticate(@RequestHeader("Authorization") String authorizationToken) {
+		logger.info("authenticate called with token: " + authorizationToken);
+		String token = null;
+		if (StringUtils.hasText(authorizationToken) && authorizationToken.startsWith("Bearer ")) {
+			token = authorizationToken.substring(7, authorizationToken.length());
+		}
+		if(jwtUtils.validateJwtToken(token)) {
 			return ResponseEntity.ok("Token validation succesfull");
 		} else
         return new ResponseEntity<String>("no or invalid token", HttpStatus.UNAUTHORIZED);
