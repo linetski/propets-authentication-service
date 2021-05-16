@@ -78,7 +78,7 @@ public class AuthController {
 			token = authorizationToken.substring(7, authorizationToken.length());
 		}
 		if(jwtUtils.validateJwtToken(token)) {
-			return ResponseEntity.ok("Token validation succesfull");
+			return ResponseEntity.ok(jwtUtils.getUserNameFromJwtAuthorization(token));
 		} else
         return new ResponseEntity<String>("no or invalid token", HttpStatus.UNAUTHORIZED);
     }
