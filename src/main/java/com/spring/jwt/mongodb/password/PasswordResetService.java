@@ -40,15 +40,13 @@ public class PasswordResetService {
 	public void sendEmail(String token, User user) {
 		String url = "http://localhost:3000" + "/reset_password?token=" + token;
 		StringBuilder builder = new StringBuilder();
-		builder.append("Hello!\r\n"
+		builder.append("HHello!\r\n"
 				+ "Forgot password?\r\n"
-				+ "Click the");
+				+ "Click the link and enter new password: \r\n");
 		builder.append(url);
-		builder.append("and enter new password:\r\n"
-				+ "\r\n"
-				+ "\r\n"
+		builder.append("\r\n\r\n"
 				+ "Best regards, site \"ProPets\"");
-		builder.append("_\r\n"
+		builder.append("_\r\n\r\n"
 				+ "This is an automatic letter.\r\n"
 				+ "Please don't answer.");
 		Email email = new Email();
