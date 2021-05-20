@@ -3,11 +3,14 @@ package com.spring.jwt.mongodb.password;
 import java.util.Calendar;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.spring.jwt.mongodb.controllers.AuthController;
 import com.spring.jwt.mongodb.models.PasswordResetToken;
 import com.spring.jwt.mongodb.models.User;
 import com.spring.jwt.mongodb.repository.PasswordTokenRepository;
@@ -19,6 +22,8 @@ import propets.model.Email;
 public class PasswordResetService {
 	
 	private static final String EMAIL_TOPIC = "email";
+	
+	private static final Logger logger = LoggerFactory.getLogger(PasswordResetService.class);
 	
 	@Autowired
 	PasswordTokenRepository passwordTokenRepository;
@@ -38,6 +43,7 @@ public class PasswordResetService {
 		email.setBody(url);
 		email.setEmailAdress(user.getEmail());
 		email.setSubject("reset password url:");
+		logger.info("email to send: "+user.getEmail());
 		emailKafkaTemplate.send(EMAIL_TOPIC,email);
 	}
 	
