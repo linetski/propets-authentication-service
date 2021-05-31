@@ -33,7 +33,7 @@ public class JwtUtils {
 		LocalDate localDate = LocalDate.now();
 		Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
-		LocalDate localDate2 = LocalDate.now().plusDays(1);
+		LocalDate localDate2 = LocalDate.now().plusDays(7);
 		Date date2 = Date.from(localDate2.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		
 		return Jwts.builder()

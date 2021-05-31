@@ -67,8 +67,6 @@ public class AuthController {
 	@Autowired
 	PasswordResetService passwordResetService;
 	
-	/* @Value("${user.role}") */
-	private String role = "tempStub";
 	
 	@RequestMapping("/authenticate")
     public ResponseEntity<String> authenticate(@RequestHeader("Authorization") String authorizationToken) {
@@ -160,11 +158,6 @@ public class AuthController {
 		loginRequest.setPassword(signUpRequest.getPassword());
 		return authenticateUser(loginRequest);
 	}
-	
-	@RequestMapping("/role")
-    public String hello() {
-        return "Using [" + role + "] from config server";
-    }
 	
 	@RequestMapping("/getProfileName")
     public ResponseEntity<?> getProfileName(@RequestHeader (name="Authorization") String token) {		
