@@ -7,3 +7,7 @@ eureka:
       instanceId: ${DOMAIN_NAME:localhost}:${random.value}
       hostname: propets-auth-service
       nonSecurePort: ${PORT}
+
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Jerusalem
