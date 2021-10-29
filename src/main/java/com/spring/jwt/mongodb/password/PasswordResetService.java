@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +37,15 @@ public class PasswordResetService {
 	PasswordEncoder encoder;
 	
 	@Autowired
-    private KafkaTemplate<String, Email> emailKafkaTemplate;
+	private AmqpTemplate rabbitTemplate;
+	
+	@Value("${rabbitmq.exchange}")
+	private String exchange;
+	
+	@Value("${rabbitmq.routingkey}")
+	private String routingkey;
+	//@Autowired
+    //private KafkaTemplate<String, Email> emailKafkaTemplate;
 	
 	public void sendEmail(String token, User user) {
 		String url = "http://localhost:3000" + "/reset_password?token=" + token;
@@ -54,7 +64,8 @@ public class PasswordResetService {
 		email.setEmailAdress(user.getEmail());
 		email.setSubject("reset password url:");
 		logger.info("email to send: "+user.getEmail());
-		emailKafkaTemplate.send(EMAIL_TOPIC,email);
+		//emailKafkaTemplate.send(EMAIL_TOPIC,email);
+		rabbitTemplate.convertAndSend(exchange, routingkey, email);
 	}
 	
 	public void createPasswordResetTokenForUser(User user, String token) {
